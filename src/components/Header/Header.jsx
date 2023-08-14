@@ -1,3 +1,5 @@
+import logo from '../../assets/img/pizza-logo.svg';
+
 const Header = () => {
   return (
     <div className="header">
@@ -5,7 +7,7 @@ const Header = () => {
         <div className="header__logo">
           <img
             width="38"
-            src="img/pizza-logo.svg"
+            src={logo}
             alt="Pizza logo"
           />
           <div>
