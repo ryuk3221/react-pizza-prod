@@ -1,4 +1,15 @@
+import { useState } from "react";
+
 const Sort = () => {
+  const [isDropDownOpen, setDropDownOpen] = useState(false);
+  const [selectedSortItem, setSelectedSortItem] = useState(0);
+  const sortItems = ['популярности', 'цене', 'алфавиту'];
+  
+  const onSelectSortItem = (index) => {
+    setSelectedSortItem(index);
+    setDropDownOpen(!isDropDownOpen);
+  }
+
   return (
     <div className="sort">
       <div className="sort__label">
@@ -14,16 +25,29 @@ const Sort = () => {
             fill="#2C2C2C"
           />
         </svg>
-        <b>Сортировка по:</b>
-        <span>популярности</span>
+        <b onClick={() => setDropDownOpen(!isDropDownOpen)}>Сортировка по:</b>
+        <span onClick={() => setDropDownOpen(!isDropDownOpen)} >{sortItems[selectedSortItem]}</span>
       </div>
-      <div className="sort__popup">
-        <ul>
-          <li className="active">популярности</li>
-          <li>цене</li>
-          <li>алфавиту</li>
-        </ul>
-      </div>
+      
+        {isDropDownOpen && (
+          <div className="sort__popup">
+            <ul>
+              {
+                sortItems.map((li, index) => (
+                  <li 
+                    className={index === selectedSortItem ? 'active' : ''} 
+                    onClick={() => onSelectSortItem(index)}
+                    key={index}
+                  >
+                    {li}
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+        )}
+        
+      
     </div>
   );
 };
