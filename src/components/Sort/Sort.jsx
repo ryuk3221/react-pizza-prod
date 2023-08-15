@@ -1,12 +1,18 @@
 import { useState } from "react";
 
 const Sort = () => {
+  //Состояние выпадающего списка сортировки, умлчанию скрыт
   const [isDropDownOpen, setDropDownOpen] = useState(false);
+  //Состояние активного селекта, по умолчанию первый активный
   const [selectedSortItem, setSelectedSortItem] = useState(0);
+  //Варианты сорторовки
   const sortItems = ['популярности', 'цене', 'алфавиту'];
   
+  //Функция
   const onSelectSortItem = (index) => {
+    //Выбрыл по клику нужный элемент выпадающего списка
     setSelectedSortItem(index);
+    //Скрыл выпадающий список сортировки
     setDropDownOpen(!isDropDownOpen);
   }
 
