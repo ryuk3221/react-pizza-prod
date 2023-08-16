@@ -5,10 +5,13 @@ import Categories from "./components/Categories/Categories";
 import Sort from "./components/Sort/Sort";
 import PizzaBlock from "./components/PizzaBlock/PizzaBlock";
 import pizzas from './assets/pizza.json';
+import SkeletonPizza from "./components/SkeletonBlock.jsx";
 
 function App() {
   //Состояние элементов каталога (пиццы)
-  const [catalogItems, setCatalogItems] = useState([]);
+  const [catalogItems, setCatalogItems] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+  //Состояние загрузки карточек с пицами
+  const [isLoading, setIsLoading] = useState(true);
 
   //Вызываю 1раз при первичном рендеринге
   useEffect(() => {
@@ -16,6 +19,7 @@ function App() {
     const getCatalogItems = async () => {
       const items =  await fetch('https://648b792b17f1536d65eafd99.mockapi.io/catalog');
       const itemsData = await items.json();
+      setIsLoading(false);
       //Обновляю состояние
       setCatalogItems(itemsData);
     }
@@ -35,9 +39,8 @@ function App() {
           <div className="content__items">
            
            {
-            catalogItems.map(obj => (
-              <PizzaBlock {...obj} key={obj.id}/>
-            ))
+            // catalogItems.map(obj => (isLoading ? <SkeletonPizza /> : <PizzaBlock {...obj} key={obj.id}/>))
+            isLoading ? [...Array(6)].map((obj, index) => (<SkeletonPizza key={index} />)) : catalogItems.map(obj => (<PizzaBlock {...obj} key={obj.id}/>))
            }
            
           </div>
