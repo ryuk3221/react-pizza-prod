@@ -1,12 +1,10 @@
 import { useState } from "react";
 
-const Sort = () => {
+const Sort = ({selectedSortItem, setSelectedSortItem}) => {
   //Состояние выпадающего списка сортировки, умлчанию скрыт
   const [isDropDownOpen, setDropDownOpen] = useState(false);
-  //Состояние активного селекта, по умолчанию первый активный
-  const [selectedSortItem, setSelectedSortItem] = useState(0);
   //Варианты сорторовки
-  const sortItems = ['популярности', 'цене', 'алфавиту'];
+  const sortItems = ['популярности (asc)','популярности (desc)', 'цене (asc)','цене (desc)', 'алфавиту (asc)', 'алфавиту (desc)'];
   
   //Функция
   const onSelectSortItem = (index) => {
@@ -38,7 +36,7 @@ const Sort = () => {
         {isDropDownOpen && (
           <div className="sort__popup">
             <ul>
-              {
+              { 
                 sortItems.map((li, index) => (
                   <li 
                     className={index === selectedSortItem ? 'active' : ''} 
