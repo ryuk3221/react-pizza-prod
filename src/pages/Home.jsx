@@ -4,6 +4,7 @@ import Categories from "../components/Categories/Categories";
 import Sort from "../components/Sort/Sort";
 import PizzaBlock from "../components/PizzaBlock/PizzaBlock";
 
+
 const categories = [
   'Все',
   'Мясные',
@@ -24,7 +25,7 @@ const sortTitles = [
 
  
 
-const Home = () => {
+const Home = ({searchValue}) => {
   //Состояние элементов каталога (пиццы)
   const [catalogItems, setCatalogItems] = useState();
   //Состояние загрузки карточек с пицами
@@ -53,6 +54,7 @@ const Home = () => {
     getCatalogItems();
   }, [activeIndexCategories, selectedSortItem]);
 
+
   return (
     <>
       <div className="content__top">
@@ -72,7 +74,8 @@ const Home = () => {
           // catalogItems.map(obj => (isLoading ? <SkeletonPizza /> : <PizzaBlock {...obj} key={obj.id}/>))
           isLoading
             ? [...Array(6)].map((obj, index) => <SkeletonPizza key={index} />)
-            : catalogItems.map((obj) => <PizzaBlock {...obj} key={obj.id} />)
+            : catalogItems.filter(obj => obj.title.toUpperCase().includes(searchValue.toUpperCase())).map((obj) => <PizzaBlock {...obj} key={obj.id} />)
+            
         }
       </div>
     </>
