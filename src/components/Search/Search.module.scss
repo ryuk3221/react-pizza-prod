@@ -1,13 +1,12 @@
 .input {
-  width: 300px;
-  padding: 10px 15px;
+  width: 400px;
+  padding: 10px 0 10px 40px;
   border-radius: 15px;
   font-size: 16px;
   border: 1px solid grey;
   transition: all 0.15s ease-in-out;
   &:focus {
     border: 1px solid black;
-    width: 450px;
   }
 }
 .parent {
@@ -17,6 +16,20 @@
 .icon {
   position: absolute;
   top: 7px;
-  right: 10px;
+  left: 10px;
   opacity: 0.5;
+}
+
+.remover {
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  top: 7px;
+  right: 10px;
+  transition: all .25s ease-in-out;
+  opacity: 0.35;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.8;
+  }
 }

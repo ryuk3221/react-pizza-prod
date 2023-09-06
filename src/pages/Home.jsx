@@ -4,28 +4,25 @@ import Categories from "../components/Categories/Categories";
 import Sort from "../components/Sort/Sort";
 import PizzaBlock from "../components/PizzaBlock/PizzaBlock";
 
-
 const categories = [
-  'Все',
-  'Мясные',
-  'Вегетарианские',
-  'Гриль',
-  'Острые',
-  'Закрытые'
+  "Все",
+  "Мясные",
+  "Вегетарианские",
+  "Гриль",
+  "Острые",
+  "Закрытые",
 ];
 
 const sortTitles = [
-  'rating asc',
-  'rating desc',
-  'price asc',
-  'price desc',
-  'title asc',
-  'title desc'
+  "rating asc",
+  "rating desc",
+  "price asc",
+  "price desc",
+  "title asc",
+  "title desc",
 ];
 
- 
-
-const Home = ({searchValue}) => {
+const Home = ({ searchValue, setCartItems }) => {
   //Состояние элементов каталога (пиццы)
   const [catalogItems, setCatalogItems] = useState();
   //Состояние загрузки карточек с пицами
@@ -39,8 +36,8 @@ const Home = ({searchValue}) => {
 
   //Вызываю 1раз при первичном рендеринге
   useEffect(() => {
-    const sortParam = sortTitles[selectedSortItem].split(' ')[0];
-    const sortOrder = sortTitles[selectedSortItem].split(' ')[1];
+    const sortParam = sortTitles[selectedSortItem].split(" ")[0];
+    const sortOrder = sortTitles[selectedSortItem].split(" ")[1];
     setIsLoading(true);
     //Обьявляю функцию которвя получает данные с бэка
     const getCatalogItems = async () => {
@@ -54,16 +51,15 @@ const Home = ({searchValue}) => {
     getCatalogItems();
   }, [activeIndexCategories, selectedSortItem]);
 
-
   return (
     <>
       <div className="content__top">
-        <Categories 
-          onChangeActiveCategories={setActiveIndexCategories} 
-          activeIndexCategories={activeIndexCategories} 
+        <Categories
+          onChangeActiveCategories={setActiveIndexCategories}
+          activeIndexCategories={activeIndexCategories}
           categories={categories}
         />
-        <Sort 
+        <Sort
           selectedSortItem={selectedSortItem}
           setSelectedSortItem={setSelectedSortItem}
         />
@@ -74,8 +70,18 @@ const Home = ({searchValue}) => {
           // catalogItems.map(obj => (isLoading ? <SkeletonPizza /> : <PizzaBlock {...obj} key={obj.id}/>))
           isLoading
             ? [...Array(6)].map((obj, index) => <SkeletonPizza key={index} />)
-            : catalogItems.filter(obj => obj.title.toUpperCase().includes(searchValue.toUpperCase())).map((obj) => <PizzaBlock {...obj} key={obj.id} />)
-            
+            : catalogItems
+                .filter((obj) =>
+                  obj.title.toUpperCase().includes(searchValue.toUpperCase())
+                )
+                .map((obj) => (
+                  <PizzaBlock
+                    {...obj}
+                    obj={obj}
+                    key={obj.id}
+                    setCartItems={setCartItems}
+                  />
+                ))
         }
       </div>
     </>

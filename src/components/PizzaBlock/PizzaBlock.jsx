@@ -1,53 +1,52 @@
 import { type } from "@testing-library/user-event/dist/type";
 import { useState } from "react";
 
-const PizzaBlock = ({ title, price, imageUrl, sizes, types }) => {
+const PizzaBlock = ({
+  title,
+  price,
+  imageUrl,
+  sizes,
+  types,
+  setCartItems,
+  obj,
+}) => {
   const [changedSize, setChangedSize] = useState(0);
   const [activeType, setActiveType] = useState(0);
-  const typeNames = ['Тонкое', 'Традиционное'];
-
-  
+  const typeNames = ["Тонкое", "Традиционное"];
 
   return (
     <div className="pizza-block">
-      <img
-        className="pizza-block__image"
-        src={imageUrl}
-        alt="Pizza"
-      />
+      <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
       <h4 className="pizza-block__title">{title}</h4>
       <div className="pizza-block__selector">
         <ul>
-          {
-            types.map((type, index) => (
-              <li 
-                key={index}
-                onClick={() => setActiveType(index)} 
-                className={activeType === index ? 'active' : ''}
-              >
-                {typeNames[type]}
-              </li>
-            ))
-          }
+          {types.map((type, index) => (
+            <li
+              key={index}
+              onClick={() => setActiveType(index)}
+              className={activeType === index ? "active" : ""}
+            >
+              {typeNames[type]}
+            </li>
+          ))}
         </ul>
         <ul>
-          {
-            sizes.map((el, index) => (
-              <li 
-                key={index}
-                onClick={() => setChangedSize(index)} 
-                className={changedSize === index ? 'active' : '' }
-              >
-                {el} см.
-              </li>
-            ))
-          }
+          {sizes.map((el, index) => (
+            <li
+              key={index}
+              onClick={() => setChangedSize(index)}
+              className={changedSize === index ? "active" : ""}
+            >
+              {el} см.
+            </li>
+          ))}
         </ul>
       </div>
       <div className="pizza-block__bottom">
         <div className="pizza-block__price">от {price} ₽</div>
         <div
           className="button button--outline button--add"
+          onClick={(prev) => setCartItems([obj])}
         >
           <svg
             width="12"

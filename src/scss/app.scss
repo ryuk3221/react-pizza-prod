@@ -56,6 +56,10 @@ body {
     justify-content: space-between;
     align-items: center;
   }
+  .content__items {
+    display: flex;
+    flex-direction: column;
+  }
 
   .content__title {
     display: flex;
