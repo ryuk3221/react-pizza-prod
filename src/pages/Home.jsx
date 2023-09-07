@@ -22,7 +22,7 @@ const sortTitles = [
   "title desc",
 ];
 
-const Home = ({ searchValue, setCartItems }) => {
+const Home = ({ searchValue, setCartItems, cartItems }) => {
   //Состояние элементов каталога (пиццы)
   const [catalogItems, setCatalogItems] = useState();
   //Состояние загрузки карточек с пицами
@@ -80,6 +80,7 @@ const Home = ({ searchValue, setCartItems }) => {
                     obj={obj}
                     key={obj.id}
                     setCartItems={setCartItems}
+                    cartItems={cartItems}
                   />
                 ))
         }

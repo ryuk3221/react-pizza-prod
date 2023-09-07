@@ -8,6 +8,7 @@ const PizzaBlock = ({
   sizes,
   types,
   setCartItems,
+  cartItems,
   obj,
 }) => {
   const [changedSize, setChangedSize] = useState(0);
@@ -46,7 +47,7 @@ const PizzaBlock = ({
         <div className="pizza-block__price">от {price} ₽</div>
         <div
           className="button button--outline button--add"
-          onClick={(prev) => setCartItems([obj])}
+          onClick={() => setCartItems([...cartItems, obj])}
         >
           <svg
             width="12"

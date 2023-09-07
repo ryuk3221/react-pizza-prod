@@ -21,7 +21,7 @@ function App() {
             <Route
               path="/"
               element={
-                <Home searchValue={searchValue} setCartItems={setCartItems} />
+                <Home searchValue={searchValue} setCartItems={setCartItems} cartItems={cartItems}/>
               }
             />
             <Route

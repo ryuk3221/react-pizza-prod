@@ -1,18 +1,18 @@
 import React from "react";
 
-const CartItem = () => {
+const CartItem = ({imageUrl, title, sizes, price}) => {
   return (
     <div className="cart__item">
       <div className="cart__item-img">
         <img
           className="pizza-block__image"
-          src="https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"
+          src={imageUrl}
           alt="Pizza"
         />
       </div>
       <div className="cart__item-info">
-        <h3>Сырный цыпленок</h3>
-        <p>тонкое тесто, 26 см.</p>
+        <h3>{title}</h3>
+        <p>тонкое тесто, {sizes[0]} см.</p>
       </div>
       <div className="cart__item-count">
         <div className="button button--outline button--circle cart__item-count-minus">
@@ -54,7 +54,7 @@ const CartItem = () => {
         </div>
       </div>
       <div className="cart__item-price">
-        <b>770 ₽</b>
+        <b>{price} ₽</b>
       </div>
       <div className="cart__item-remove">
         <div className="button button--outline button--circle">

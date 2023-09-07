@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import CartItem from "../components/CartItem/CartItem";
 
 const Cart = ({ cartItems, setCartItems }) => {
+  cartItems.forEach(el => {
+    console.log(el);
+  });
   return (
     <div className="content">
       <div className="container container--cart">
@@ -82,7 +86,7 @@ const Cart = ({ cartItems, setCartItems }) => {
           </div>
           <div className="content__items">
             {cartItems.map((obj) => (
-              <CartItem {...obj} />
+              <CartItem {...obj} key={obj.id} />
             ))}
           </div>
           <div className="cart__bottom">
@@ -97,8 +101,8 @@ const Cart = ({ cartItems, setCartItems }) => {
               </span>
             </div>
             <div className="cart__bottom-buttons">
-              <a
-                href="/"
+              <Link
+                to="/"
                 className="button button--outline button--add go-back-btn"
               >
                 <svg
@@ -118,7 +122,7 @@ const Cart = ({ cartItems, setCartItems }) => {
                 </svg>
 
                 <span>Вернуться назад</span>
-              </a>
+              </Link>
               <div className="button pay-btn">
                 <span>Оплатить сейчас</span>
               </div>
