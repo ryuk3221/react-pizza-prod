@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import SkeletonPizza from "../components/SkeletonBlock.jsx";
 import Categories from "../components/Categories/Categories";
 import Sort from "../components/Sort/Sort";
 import PizzaBlock from "../components/PizzaBlock/PizzaBlock";
 import Pagination from "../components/Pagination/Pagination.jsx";
+import { AppContext } from "../App.jsx";
 
 const categories = [
   "Все",
@@ -23,7 +24,7 @@ const sortTitles = [
   "title desc",
 ];
 
-const Home = ({ searchValue, setCartItems, cartItems }) => {
+const Home = ({cartItems, setCartItems}) => {
   //Состояние элементов каталога (пиццы)
   const [catalogItems, setCatalogItems] = useState([]);
   //Состояние загрузки карточек с пицами
@@ -36,14 +37,18 @@ const Home = ({ searchValue, setCartItems, cartItems }) => {
   const [selectedSortItem, setSelectedSortItem] = useState(0);
   //Пагинация-----------
   const [currentPage, setCurrentPage] = useState(1);
+  //Количество элементов на странице
   const pageSize = 4;
+  //Количество страниц
   let pageCount;
+
+  const {searchValue} = useContext(AppContext);
 
   const sortParam = sortTitles[selectedSortItem].split(" ")[0];
   const sortOrder = sortTitles[selectedSortItem].split(" ")[1];
   const searchParam = searchValue ? `&search=${searchValue}` : `category=${activeIndexCategories}&sortBy=${sortParam}&order=${sortOrder}`;
 
-  //Вызываю 1раз при первичном рендеринге
+  
   useEffect(() => {
     setIsLoading(true);
     //Обьявляю функцию которвя получает данные с бэка
@@ -85,14 +90,15 @@ const Home = ({ searchValue, setCartItems, cartItems }) => {
                     {...obj}
                     obj={obj}
                     key={obj.id}
-                    setCartItems={setCartItems}
                     cartItems={cartItems}
+                    setCartItems={setCartItems}
                   />
                 ))
         }
       </div>
       {
-        catalogItems.length > 4 && (
+        //Если количество карточек больше максимального кол-во карточек на странице, рендерю пагинацию
+        catalogItems.length > pageSize && (
           <Pagination 
             catalogItemsLen={catalogItems.length}
             currentPage={currentPage}

@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import CartItem from "../components/CartItem/CartItem";
+import { AppContext } from "../App";
 
-const Cart = ({ cartItems, setCartItems }) => {
-  cartItems.forEach(el => {
-    console.log(el);
-  });
+const Cart = ({cartItems, setCartItems}) => {
+
+  // const {cartItems} = useState(AppContext);
+  
   return (
     <div className="content">
       <div className="container container--cart">

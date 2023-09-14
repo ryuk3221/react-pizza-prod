@@ -1,6 +1,7 @@
 import styles from './Pagination.module.scss';
 
 const Pagination = ({currentPage, setCurrentPage, catalogItemsLen, pageSize}) => {
+  //Генерирую массив чтобы отрендерить ссылки пагинации
   let pagesArr = [...Array(Math.ceil(catalogItemsLen / pageSize))];
   
   const handleNextPage = () => {
