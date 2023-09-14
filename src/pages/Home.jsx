@@ -34,14 +34,16 @@ const Home = ({ searchValue, setCartItems, cartItems }) => {
   //Состояние активного селекта, по умолчанию первый активный
   const [selectedSortItem, setSelectedSortItem] = useState(0);
 
+  const sortParam = sortTitles[selectedSortItem].split(" ")[0];
+  const sortOrder = sortTitles[selectedSortItem].split(" ")[1];
+  const searchParam = searchValue ? `&search=${searchValue}` : `category=${activeIndexCategories}&sortBy=${sortParam}&order=${sortOrder}`;
+
   //Вызываю 1раз при первичном рендеринге
   useEffect(() => {
-    const sortParam = sortTitles[selectedSortItem].split(" ")[0];
-    const sortOrder = sortTitles[selectedSortItem].split(" ")[1];
     setIsLoading(true);
     //Обьявляю функцию которвя получает данные с бэка
     const getCatalogItems = async () => {
-      let url = `https://648b792b17f1536d65eafd99.mockapi.io/catalog?category=${activeIndexCategories}&sortBy=${sortParam}&order=${sortOrder}`;
+      let url = `https://648b792b17f1536d65eafd99.mockapi.io/catalog?${searchParam}`;
       const items = await fetch(url);
       const itemsData = await items.json();
       setIsLoading(false);
@@ -49,7 +51,7 @@ const Home = ({ searchValue, setCartItems, cartItems }) => {
       setCatalogItems(itemsData);
     };
     getCatalogItems();
-  }, [activeIndexCategories, selectedSortItem]);
+  }, [activeIndexCategories, selectedSortItem, searchValue]);
 
   return (
     <>
@@ -71,9 +73,6 @@ const Home = ({ searchValue, setCartItems, cartItems }) => {
           isLoading
             ? [...Array(6)].map((obj, index) => <SkeletonPizza key={index} />)
             : catalogItems
-                .filter((obj) =>
-                  obj.title.toUpperCase().includes(searchValue.toUpperCase())
-                )
                 .map((obj) => (
                   <PizzaBlock
                     {...obj}
