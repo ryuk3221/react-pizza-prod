@@ -31,8 +31,6 @@ const Home = ({cartItems, setCartItems}) => {
   const [isLoading, setIsLoading] = useState(true);
   //Состояние активного элемента категорий (индекс)
   const [activeIndexCategories, setActiveIndexCategories] = useState(0);
-  //Состояние активного элемента сортировки (индекс)
-  const [activeIndexSort, setActiveIndexSort] = useState(1);
   //Состояние активного селекта, по умолчанию первый активный
   const [selectedSortItem, setSelectedSortItem] = useState(0);
   //Пагинация-----------
@@ -84,16 +82,16 @@ const Home = ({cartItems, setCartItems}) => {
           isLoading
             ? [...Array(6)].map((obj, index) => <SkeletonPizza key={index} />)
             : catalogItems
-                .slice(pageSize * currentPage - pageSize, pageSize * currentPage)
-                .map((obj) => (
-                  <PizzaBlock
-                    {...obj}
-                    obj={obj}
-                    key={obj.id}
-                    cartItems={cartItems}
-                    setCartItems={setCartItems}
-                  />
-                ))
+              .slice(pageSize * currentPage - pageSize, pageSize * currentPage)
+              .map((obj) => (
+                <PizzaBlock
+                  {...obj}
+                  obj={obj}
+                  key={obj.id}
+                  cartItems={cartItems}
+                  setCartItems={setCartItems}
+                />
+              ))
         }
       </div>
       {

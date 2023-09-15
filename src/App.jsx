@@ -1,6 +1,8 @@
 import React, { createContext, useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+// import { useSelector, useDispatch } from "react-redux"; 
 import "./scss/app.scss";
+// import { store } from "./redux/store"; 
 import Header from "./components/Header/Header";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
@@ -13,6 +15,10 @@ function App() {
   const [searchValue, setSearchValue] = useState("");
   //Состояние элементов корзины
   const [cartItems, setCartItems] = useState([]);
+
+  // const count = useSelector((state) => state.counter.count);
+  // const dispatch = useDispatch();
+  
   
   return (
     <div className="wrapper">
