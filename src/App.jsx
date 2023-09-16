@@ -1,8 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-// import { useSelector, useDispatch } from "react-redux"; 
 import "./scss/app.scss";
-// import { store } from "./redux/store"; 
 import Header from "./components/Header/Header";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
@@ -18,11 +16,12 @@ function App() {
 
   // const count = useSelector((state) => state.counter.count);
   // const dispatch = useDispatch();
-  
-  
+
   return (
     <div className="wrapper">
-      <AppContext.Provider value={{searchValue, setSearchValue, cartItems, setCartItems}}>
+      <AppContext.Provider
+        value={{ searchValue, setSearchValue, cartItems, setCartItems }}
+      >
         <Header />
         <div className="content">
           <div className="container">
@@ -30,7 +29,7 @@ function App() {
               <Route
                 path="/"
                 element={
-                  <Home setCartItems={setCartItems} cartItems={cartItems}/>
+                  <Home setCartItems={setCartItems} cartItems={cartItems} />
                 }
               />
               <Route

@@ -1,21 +1,23 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  filterIndex: 0,
-}
+  categoryIndex: 0,
+  sortIndex: 0,
+};
 
-export const filterIndexSlice = createSlice({
-  name: 'filterSlice',
+const filterSlice = createSlice({
+  name: "filter",
   initialState,
   reducers: {
-    handleChangeFilterIndex: (state, index) => {
-      state.filterIndex += index.payload;
+    setCategoryIndex(state, action) {
+      state.categoryIndex = action.payload;
     },
-    
+    setSortIndex(state, action) {
+      state.sortIndex = action.payload;
+    }
   },
-})
+});
 
-// Action creators are generated for each case reducer function
-export const { handleChangeFilterIndex } = filterIndexSlice.actions
+export const { setCategoryIndex, setSortIndex } = filterSlice.actions;
 
-export default filterIndexSlice.reducer
+export default filterSlice.reducer;

@@ -1,16 +1,14 @@
 import { useState } from "react";
 
-const Categories = ({onChangeActiveCategories, activeIndexCategories, categories}) => {
+const Categories = ({setActiveIndexCategories, activeIndexCategories, categories}) => {
 
-  const handleChangeCategory = (index) => {
-    onChangeActiveCategories(index);
-  }
+  
 
   return (
     <div className="categories">
       <ul>
         {categories.map((el, index) => (
-          <li onClick={() => handleChangeCategory(index)} className={activeIndexCategories === index ? 'active' : ''} key={index + el}>{el}</li>
+          <li onClick={() => setActiveIndexCategories(index)} className={activeIndexCategories === index ? 'active' : ''} key={index + el}>{el}</li>
         ))}
       </ul>
     </div>

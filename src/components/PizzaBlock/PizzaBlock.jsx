@@ -1,18 +1,16 @@
-import { type } from "@testing-library/user-event/dist/type";
 import { useState } from "react";
-import { AppContext } from "../../App";
 
 const PizzaBlock = ({
-    title,
-    price,
-    imageUrl,
-    sizes,
-    types,
-    cartItems,
-    setCartItems,
-    obj
-  }) => {
-  // const {cartItems, setCartItems} = useState(AppContext); 
+  title,
+  price,
+  imageUrl,
+  sizes,
+  types,
+  cartItems,
+  setCartItems,
+  obj,
+}) => {
+  // const {cartItems, setCartItems} = useState(AppContext);
   const [changedSize, setChangedSize] = useState(0);
   const [activeType, setActiveType] = useState(0);
   const typeNames = ["Тонкое", "Традиционное"];

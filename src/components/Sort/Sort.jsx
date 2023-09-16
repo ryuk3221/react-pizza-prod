@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const Sort = ({selectedSortItem, setSelectedSortItem}) => {
+const Sort = ({activeSortIndex, setActiveSortIndex}) => {
   //Состояние выпадающего списка сортировки, умлчанию скрыт
   const [isDropDownOpen, setDropDownOpen] = useState(false);
   //Варианты сорторовки
@@ -9,7 +9,7 @@ const Sort = ({selectedSortItem, setSelectedSortItem}) => {
   //Функция
   const onSelectSortItem = (index) => {
     //Выбрыл по клику нужный элемент выпадающего списка
-    setSelectedSortItem(index);
+    setActiveSortIndex(index);
     //Скрыл выпадающий список сортировки
     setDropDownOpen(!isDropDownOpen);
   }
@@ -30,7 +30,7 @@ const Sort = ({selectedSortItem, setSelectedSortItem}) => {
           />
         </svg>
         <b onClick={() => setDropDownOpen(!isDropDownOpen)}>Сортировка по:</b>
-        <span onClick={() => setDropDownOpen(!isDropDownOpen)} >{sortItems[selectedSortItem]}</span>
+        <span onClick={() => setDropDownOpen(!isDropDownOpen)} >{sortItems[activeSortIndex]}</span>
       </div>
       
         {isDropDownOpen && (
@@ -39,7 +39,7 @@ const Sort = ({selectedSortItem, setSelectedSortItem}) => {
               { 
                 sortItems.map((li, index) => (
                   <li 
-                    className={index === selectedSortItem ? 'active' : ''} 
+                    className={index === activeSortIndex ? 'active' : ''} 
                     onClick={() => onSelectSortItem(index)}
                     key={index}
                   >
