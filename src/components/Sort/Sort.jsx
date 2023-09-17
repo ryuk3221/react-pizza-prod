@@ -9,6 +9,7 @@ const Sort = () => {
   const [isDropDownOpen, setDropDownOpen] = useState(false);
   //Варианты сорторовки
   const sortItems = ['популярности (asc)','популярности (desc)', 'цене (asc)','цене (desc)', 'алфавиту (asc)', 'алфавиту (desc)'];
+
   
   //Функция
   const onSelectSortItem = (index) => {
