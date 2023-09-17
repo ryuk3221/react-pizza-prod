@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { AppContext } from "../App.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import { setCategoryIndex, setSortIndex } from "../redux/slices/filterSlice.js";
+import { setCatalogItems } from "../redux/slices/catalogItemsSlice.js";
 import SkeletonPizza from "../components/SkeletonBlock.jsx";
 import Categories from "../components/Categories/Categories";
 import Sort from "../components/Sort/Sort";
@@ -29,25 +30,16 @@ const sortTitles = [
 
 const Home = ({ cartItems, setCartItems }) => {
   const dispatch = useDispatch();
+  //Активнаый индекс категорий
   const activeIndexCategories = useSelector(state => state.filterSliceReducer.categoryIndex);
+  //Активный интекс сортировки
   const activeSortIndex = useSelector(state => state.filterSliceReducer.sortIndex);
+  //Состояние элементов каталога
+  const сatalogItems = useSelector(state => state.catalogSliceReducer.catalogItems);
 
-  const setActiveIndexCategories = (index) => {
-    dispatch(setCategoryIndex(index));
-  };
 
-  const setActiveSortIndex = (index) => {
-    dispatch(setSortIndex(index));
-  } 
-
-  //Состояние элементов каталога (пиццы)
-  const [catalogItems, setCatalogItems] = useState([]);
   //Состояние загрузки карточек с пицами
   const [isLoading, setIsLoading] = useState(true);
-  //Состояние активного элемента категорий (индекс)
-  // const [activeIndexCategories, setActiveIndexCategories] = useState(0);
-  //Состояние активного селекта, по умолчанию первый активный
-  // const [selectedSortItem, setSelectedSortItem] = useState(0);
   //Пагинация-----------
   const [currentPage, setCurrentPage] = useState(1);
   //Количество элементов на странице
@@ -71,8 +63,8 @@ const Home = ({ cartItems, setCartItems }) => {
       const items = await fetch(url);
       const itemsData = await items.json();
       setIsLoading(false);
-      //Обновляю состояние
-      setCatalogItems(itemsData);
+      //Обновляю состояние каталога 
+      dispatch(setCatalogItems(itemsData));
       pageCount = Math.ceil(itemsData.length / pageSize);
     };
     getCatalogItems();
@@ -82,14 +74,9 @@ const Home = ({ cartItems, setCartItems }) => {
     <>
       <div className="content__top">
         <Categories
-          setActiveIndexCategories={setActiveIndexCategories}
-          activeIndexCategories={activeIndexCategories}
           categories={categories}
         />
-        <Sort
-          activeSortIndex={activeSortIndex}
-          setActiveSortIndex={setActiveSortIndex}
-        />
+        <Sort />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
@@ -97,27 +84,27 @@ const Home = ({ cartItems, setCartItems }) => {
           // catalogItems.map(obj => (isLoading ? <SkeletonPizza /> : <PizzaBlock {...obj} key={obj.id}/>))
           isLoading
             ? [...Array(6)].map((obj, index) => <SkeletonPizza key={index} />)
-            : catalogItems
-                .slice(
-                  pageSize * currentPage - pageSize,
-                  pageSize * currentPage
-                )
-                .map((obj) => (
-                  <PizzaBlock
-                    {...obj}
-                    obj={obj}
-                    key={obj.id}
-                    cartItems={cartItems}
-                    setCartItems={setCartItems}
-                  />
-                ))
+            : сatalogItems
+              .slice(
+                pageSize * currentPage - pageSize,
+                pageSize * currentPage
+              )
+              .map((obj) => (
+                <PizzaBlock
+                  {...obj}
+                  obj={obj}
+                  key={obj.id}
+                  cartItems={cartItems}
+                  setCartItems={setCartItems}
+                />
+              ))
         }
       </div>
       {
         //Если количество карточек больше максимального кол-во карточек на странице, рендерю пагинацию
-        catalogItems.length > pageSize && (
+        сatalogItems.length > pageSize && (
           <Pagination
-            catalogItemsLen={catalogItems.length}
+            catalogItemsLen={сatalogItems.length}
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
             pageSize={pageSize}

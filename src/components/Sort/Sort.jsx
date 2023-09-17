@@ -1,6 +1,10 @@
 import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setSortIndex } from "../../redux/slices/filterSlice";
 
-const Sort = ({activeSortIndex, setActiveSortIndex}) => {
+const Sort = () => {
+  const dispatch = useDispatch();
+  const activeSortIndex = useSelector(state => state.filterSliceReducer.sortIndex);
   //Состояние выпадающего списка сортировки, умлчанию скрыт
   const [isDropDownOpen, setDropDownOpen] = useState(false);
   //Варианты сорторовки
@@ -9,7 +13,7 @@ const Sort = ({activeSortIndex, setActiveSortIndex}) => {
   //Функция
   const onSelectSortItem = (index) => {
     //Выбрыл по клику нужный элемент выпадающего списка
-    setActiveSortIndex(index);
+    dispatch(setSortIndex(index));
     //Скрыл выпадающий список сортировки
     setDropDownOpen(!isDropDownOpen);
   }
