@@ -1,8 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { AppContext } from "../App.jsx";
-import { useDispatch, useSelector } from "react-redux";
-import { setCategoryIndex, setSortIndex } from "../redux/slices/filterSlice.js";
-import { setCatalogItems } from "../redux/slices/catalogItemsSlice.js";
+import {  useSelector } from "react-redux";
+import axios from "axios";
 import SkeletonPizza from "../components/SkeletonBlock.jsx";
 import Categories from "../components/Categories/Categories";
 import Sort from "../components/Sort/Sort";
@@ -29,15 +28,12 @@ const sortTitles = [
 ];
 
 const Home = ({ cartItems, setCartItems }) => {
-  const dispatch = useDispatch();
   //Активнаый индекс категорий
   const activeIndexCategories = useSelector(state => state.filterSliceReducer.categoryIndex);
   //Активный интекс сортировки
   const activeSortIndex = useSelector(state => state.filterSliceReducer.sortIndex);
-  //Состояние элементов каталога
-  const сatalogItems = useSelector(state => state.catalogSliceReducer.catalogItems);
-
-
+  //Состояние каталога
+  const [catalogItems, setCatalogItems] = useState([]);
   //Состояние загрузки карточек с пицами
   const [isLoading, setIsLoading] = useState(true);
   //Пагинация-----------
@@ -60,15 +56,16 @@ const Home = ({ cartItems, setCartItems }) => {
     //Обьявляю функцию которвя получает данные с бэка
     const getCatalogItems = async () => {
       let url = `https://648b792b17f1536d65eafd99.mockapi.io/catalog?${searchParam}`;
-      const items = await fetch(url);
-      const itemsData = await items.json();
+      const itemsData = await axios.get(url).then(response => response.data);
       setIsLoading(false);
       //Обновляю состояние каталога 
-      dispatch(setCatalogItems(itemsData));
+      setCatalogItems(itemsData);
       pageCount = Math.ceil(itemsData.length / pageSize);
     };
     getCatalogItems();
   }, [activeIndexCategories, activeSortIndex, searchValue]);
+
+  
 
   return (
     <>
@@ -84,7 +81,7 @@ const Home = ({ cartItems, setCartItems }) => {
           // catalogItems.map(obj => (isLoading ? <SkeletonPizza /> : <PizzaBlock {...obj} key={obj.id}/>))
           isLoading
             ? [...Array(6)].map((obj, index) => <SkeletonPizza key={index} />)
-            : сatalogItems
+            : catalogItems
               .slice(
                 pageSize * currentPage - pageSize,
                 pageSize * currentPage
@@ -102,9 +99,9 @@ const Home = ({ cartItems, setCartItems }) => {
       </div>
       {
         //Если количество карточек больше максимального кол-во карточек на странице, рендерю пагинацию
-        сatalogItems.length > pageSize && (
+        catalogItems.length > pageSize && (
           <Pagination
-            catalogItemsLen={сatalogItems.length}
+            catalogItemsLen={catalogItems.length}
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
             pageSize={pageSize}
