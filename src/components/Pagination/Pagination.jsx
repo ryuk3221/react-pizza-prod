@@ -2,6 +2,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentPage } from '../../redux/slices/paginationSlice';
 import styles from './Pagination.module.scss';
 
+
 const Pagination = ({ catalogItemsLen }) => {
   const dispatch = useDispatch();
   const currentPage = useSelector(state => state.paginationReducer.currentPage);
