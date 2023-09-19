@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { AppContext } from "../App.jsx";
-import {  useSelector } from "react-redux";
+import {  useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import SkeletonPizza from "../components/SkeletonBlock.jsx";
 import Categories from "../components/Categories/Categories";
@@ -28,6 +28,7 @@ const sortTitles = [
 ];
 
 const Home = ({ cartItems, setCartItems }) => {
+  const dispatch = useDispatch();
   //Активнаый индекс категорий
   const activeIndexCategories = useSelector(state => state.filterSliceReducer.categoryIndex);
   //Активный интекс сортировки
@@ -37,12 +38,9 @@ const Home = ({ cartItems, setCartItems }) => {
   //Состояние загрузки карточек с пицами
   const [isLoading, setIsLoading] = useState(true);
   //Пагинация-----------
-  const [currentPage, setCurrentPage] = useState(1);
+  const currentPage = useSelector(state => state.paginationReducer.currentPage);
   //Количество элементов на странице
-  const pageSize = 4;
-  //Количество страниц
-  let pageCount;
-
+  const pageSize = useSelector(state => state.paginationReducer.pageSize);
   const { searchValue } = useContext(AppContext);
 
   const sortParam = sortTitles[activeSortIndex].split(" ")[0];
@@ -60,7 +58,7 @@ const Home = ({ cartItems, setCartItems }) => {
       setIsLoading(false);
       //Обновляю состояние каталога 
       setCatalogItems(itemsData);
-      pageCount = Math.ceil(itemsData.length / pageSize);
+
     };
     getCatalogItems();
   }, [activeIndexCategories, activeSortIndex, searchValue]);
@@ -102,9 +100,6 @@ const Home = ({ cartItems, setCartItems }) => {
         catalogItems.length > pageSize && (
           <Pagination
             catalogItemsLen={catalogItems.length}
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-            pageSize={pageSize}
           />
         )
       }

@@ -1,18 +1,23 @@
+import { useSelector, useDispatch } from 'react-redux';
+import { setCurrentPage } from '../../redux/slices/paginationSlice';
 import styles from './Pagination.module.scss';
 
-const Pagination = ({currentPage, setCurrentPage, catalogItemsLen, pageSize}) => {
+const Pagination = ({ catalogItemsLen }) => {
+  const dispatch = useDispatch();
+  const currentPage = useSelector(state => state.paginationReducer.currentPage);
+  const pageSize = useSelector(state => state.paginationReducer.pageSize);
   //Генерирую массив чтобы отрендерить ссылки пагинации
   let pagesArr = [...Array(Math.ceil(catalogItemsLen / pageSize))];
   
   const handleNextPage = () => {
     if (currentPage < pagesArr.length) {
-      setCurrentPage(currentPage + 1);
+      dispatch(setCurrentPage(currentPage + 1));
     }
   }
 
   const handlePrevPage = () => {
     if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
+      dispatch(setCurrentPage(currentPage - 1));
     }
   }
 
@@ -27,7 +32,7 @@ const Pagination = ({currentPage, setCurrentPage, catalogItemsLen, pageSize}) =>
         pagesArr.map((page, index) => (
           <button 
             className={styles.btn + ' ' + (index + 1 == currentPage ? styles.btnActive : '')}
-            onClick={() => setCurrentPage(index + 1)}
+            onClick={() => dispatch(setCurrentPage(index + 1))}
             key={'btn_id_' + index}
           >
             {index + 1}
