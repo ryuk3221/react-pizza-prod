@@ -32,7 +32,7 @@ const sortTitles = [
   "title desc",
 ];
 
-const Home = ({ cartItems, setCartItems }) => {
+const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const hasParams = useRef(false);
@@ -129,8 +129,6 @@ const Home = ({ cartItems, setCartItems }) => {
                   {...obj}
                   obj={obj}
                   key={obj.id}
-                  cartItems={cartItems}
-                  setCartItems={setCartItems}
                 />
               ))
         }

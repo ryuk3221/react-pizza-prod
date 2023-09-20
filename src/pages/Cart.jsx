@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import CartItem from "../components/CartItem/CartItem";
-import { AppContext } from "../App";
 
-const Cart = ({cartItems, setCartItems}) => {
 
-  // const {cartItems} = useState(AppContext);
-  
+const Cart = () => {
+  const { cartItems } = useSelector(state => state.cartReducer);
+  const { totalPrice } = useSelector(state => state.cartReducer);
   return (
     <div className="content">
       <div className="container container--cart">
@@ -86,19 +86,21 @@ const Cart = ({cartItems, setCartItems}) => {
             </div>
           </div>
           <div className="content__items">
-            {cartItems.map((obj) => (
-              <CartItem {...obj} key={obj.id} />
-            ))}
+            {
+              cartItems.map(cartItem => (
+                <CartItem {...cartItem} key={cartItem.id}/>
+              ))
+            }
           </div>
           <div className="cart__bottom">
             <div className="cart__bottom-details">
               <span>
                 {" "}
-                Всего пицц: <b>3 шт.</b>{" "}
+                Всего пицц: <b>{cartItems.length} шт.</b>{" "}
               </span>
               <span>
                 {" "}
-                Сумма заказа: <b>900 ₽</b>{" "}
+                Сумма заказа: <b>{totalPrice} ₽</b>{" "}
               </span>
             </div>
             <div className="cart__bottom-buttons">

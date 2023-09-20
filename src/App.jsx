@@ -11,8 +11,7 @@ export const AppContext = createContext();
 function App() {
   //Состояние со значением инпута поиска
   const [searchValue, setSearchValue] = useState("");
-  //Состояние элементов корзины
-  const [cartItems, setCartItems] = useState([]);
+  
 
   // const count = useSelector((state) => state.counter.count);
   // const dispatch = useDispatch();
@@ -20,7 +19,7 @@ function App() {
   return (
     <div className="wrapper">
       <AppContext.Provider
-        value={{ searchValue, setSearchValue, cartItems, setCartItems }}
+        value={{ searchValue, setSearchValue }}
       >
         <Header />
         <div className="content">
@@ -29,13 +28,13 @@ function App() {
               <Route
                 path="/"
                 element={
-                  <Home setCartItems={setCartItems} cartItems={cartItems} />
+                  <Home  />
                 }
               />
               <Route
                 path="/cart"
                 element={
-                  <Cart cartItems={cartItems} setCartItems={setCartItems} />
+                  <Cart  />
                 }
               />
               <Route path="*" element={<NotFound />} />

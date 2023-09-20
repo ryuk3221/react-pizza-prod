@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setSortIndex } from "../../redux/slices/filterSlice";
 
@@ -9,18 +9,29 @@ const Sort = () => {
   const [isDropDownOpen, setDropDownOpen] = useState(false);
   //Варианты сорторовки
   const sortItems = ['популярности (asc)','популярности (desc)', 'цене (asc)','цене (desc)', 'алфавиту (asc)', 'алфавиту (desc)'];
+  //DOM элемент сортировки
+  const sortRef = useRef();
 
   
+
   //Функция
-  const onSelectSortItem = (index) => {
+  const handleSelectSortItem = (index) => {
     //Выбрыл по клику нужный элемент выпадающего списка
     dispatch(setSortIndex(index));
     //Скрыл выпадающий список сортировки
     setDropDownOpen(!isDropDownOpen);
   }
 
+  useEffect(() => {
+    document.body.onclick = (event) => {
+      if (!event.target.closest('.sort')) {
+        setDropDownOpen(false);
+      }
+    }
+  }, []);
+
   return (
-    <div className="sort">
+    <div className="sort" ref={sortRef}>
       <div className="sort__label">
         <svg
           width="10"
@@ -45,7 +56,7 @@ const Sort = () => {
                 sortItems.map((li, index) => (
                   <li 
                     className={index == activeSortIndex ? 'active' : ''} 
-                    onClick={() => onSelectSortItem(index)}
+                    onClick={() => handleSelectSortItem(index)}
                     key={index}
                   >
                     {li}
