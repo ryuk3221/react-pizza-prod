@@ -6,7 +6,7 @@ const CartItem = ({id, imageUrl, title, size, type, price, count}) => {
   const dispatch = useDispatch();
   
   const handleRemoveFromCart = () => {
-    dispatch(removeCartItem({id}));
+    dispatch(removeCartItem({id, type, size}));
   };
 
   const handleIncrement = () => {

@@ -14,7 +14,7 @@ const PizzaBlock = ({
   // const {cartItems, setCartItems} = useState(AppContext);
   const [changedSize, setChangedSize] = useState(0);
   const [activeType, setActiveType] = useState(0);
-  const typeNames = ["Тонкое", "Традиционное"];
+  
   const dispatch = useDispatch();
 
   //Получаю список твоаров корзины
@@ -25,10 +25,10 @@ const PizzaBlock = ({
 
   const onClickAdd = () => {
     const item = {
-      id, 
-      title, 
+      id,
+      title,
       price, 
-      imageUrl, 
+      imageUrl,
       type: types[activeType],
       size: sizes[changedSize],
       count: 1

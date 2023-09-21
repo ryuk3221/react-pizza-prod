@@ -2,9 +2,7 @@ import { Link } from "react-router-dom";
 import logo from "../../assets/img/pizza-logo.svg";
 import Search from "../Search/search.jsx";
 import { useSelector } from "react-redux";
-import { addCartItem, removeCartItem, clearItems } from "../../redux/slices/cartSlice";
-import { useContext } from "react";
-import { AppContext } from "../../App";
+
 
 const Header = () => {
   const { totalPrice, cartItems } = useSelector(state => state.cartReducer);
