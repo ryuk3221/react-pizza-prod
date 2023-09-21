@@ -29,8 +29,8 @@ const PizzaBlock = ({
       title, 
       price, 
       imageUrl, 
-      type: activeType,
-      size: changedSize,
+      type: types[activeType],
+      size: sizes[changedSize],
       count: 1
     };
     dispatch(addCartItem(item));
@@ -48,7 +48,7 @@ const PizzaBlock = ({
               onClick={() => setActiveType(index)}
               className={activeType === index ? "active" : ""}
             >
-              {typeNames[type]}
+              {type}
             </li>
           ))}
         </ul>

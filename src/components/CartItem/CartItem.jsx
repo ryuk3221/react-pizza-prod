@@ -1,6 +1,22 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { removeCartItem, increment, decrement } from "../../redux/slices/cartSlice";
 
 const CartItem = ({id, imageUrl, title, size, type, price, count}) => {
+  const dispatch = useDispatch();
+  
+  const handleRemoveFromCart = () => {
+    dispatch(removeCartItem({id}));
+  };
+
+  const handleIncrement = () => {
+    dispatch(increment({id, price}));
+  };
+
+  const handleDecrement = () => {
+    dispatch(decrement({id, price}));
+  };
+
   return (
     <div className="cart__item">
       <div className="cart__item-img">
@@ -12,10 +28,10 @@ const CartItem = ({id, imageUrl, title, size, type, price, count}) => {
       </div>
       <div className="cart__item-info">
         <h3>{title}</h3>
-        <p>тонкое тесто, 26 см.</p>
+        <p>{type} тесто, {size} см.</p>
       </div>
       <div className="cart__item-count">
-        <div className="button button--outline button--circle cart__item-count-minus">
+        <div className="button button--outline button--circle cart__item-count-minus" onClick={handleDecrement}>
           <svg
             width="10"
             height="10"
@@ -34,7 +50,7 @@ const CartItem = ({id, imageUrl, title, size, type, price, count}) => {
           </svg>
         </div>
         <b>{count}</b>
-        <div className="button button--outline button--circle cart__item-count-plus">
+        <div className="button button--outline button--circle cart__item-count-plus" onClick={handleIncrement}>
           <svg
             width="10"
             height="10"
@@ -54,9 +70,9 @@ const CartItem = ({id, imageUrl, title, size, type, price, count}) => {
         </div>
       </div>
       <div className="cart__item-price">
-        <b>{price} ₽</b>
+        <b>{price * count} ₽</b>
       </div>
-      <div className="cart__item-remove">
+      <div className="cart__item-remove" onClick={handleRemoveFromCart}>
         <div className="button button--outline button--circle">
           <svg
             width="10"
