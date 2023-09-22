@@ -19,6 +19,9 @@ const Cart = () => {
     return <CartEmpty />
   }
 
+
+  const getTotalPizzasCount = (arr) => {arr.reduce((totalCount, item ) => totalCount + item.count)};
+
   return (
     <div className="content">
       <div className="container container--cart">
@@ -100,7 +103,7 @@ const Cart = () => {
               <div className="content__items">
                 {
                   cartItems.map(cartItem => (
-                    <CartItem {...cartItem} key={cartItem.id + `${cartItem.type}`}/>
+                    <CartItem {...cartItem} key={cartItem.id + `${cartItem.type}` + `${cartItem.size}`}/>
                   ))
                 }
               </div>
@@ -112,7 +115,7 @@ const Cart = () => {
                   </span>
                   <span>
                     {" "}
-                    Сумма заказа: <b>{totalPrice} ₽</b>{" "}
+                    Сумма заказа: <b>{getTotalPizzasCount(cartItems)} ₽</b>{" "}
                   </span>
                 </div>
                 <div className="cart__bottom-buttons">

@@ -10,11 +10,11 @@ const CartItem = ({id, imageUrl, title, size, type, price, count}) => {
   };
 
   const handleIncrement = () => {
-    dispatch(increment({id, price}));
+    dispatch(increment({id, price, type, size}));
   };
 
   const handleDecrement = () => {
-    dispatch(decrement({id, price}));
+    dispatch(decrement({id, price, type, size}));
   };
 
   return (
