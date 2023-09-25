@@ -20,8 +20,8 @@ const PizzaBlock = ({
   //Получаю список твоаров корзины
   const { cartItems } = useSelector(state => state.cartReducer);
   
-  const findedItem = cartItems.find(item => item.id === id);
-
+  const findedItem = cartItems.find(item => item.id === id && item.size == sizes[changedSize] && item.type == types[activeType]);
+  
 
   const onClickAdd = () => {
     const item = {
