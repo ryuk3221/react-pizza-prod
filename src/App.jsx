@@ -66,7 +66,7 @@ function App() {
                   <Cart  />
                 }
               />
-              <Route path="*" element={<NotFound />} />
+              {/* <Route path="*" element={<NotFound />} /> */}
             </Routes>
           </div>
         </div>
